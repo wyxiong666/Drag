@@ -1,0 +1,40 @@
+.box{
+    overflow: hidden;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+#input{
+    width: 42%;
+    height: 26px;
+    display: block;
+}
+.wrap{
+    overflow: hidden;
+}
+#drag_div
+{
+    float:left;
+    width:400px;
+    min-height:400px;
+    margin:10px 0 10px 0;
+    padding:10px;
+    border:1px solid #aaaaaa;
+}
+.drop_div{
+    float: right;
+}
+#div1,#div2,#div3{
+    width: 200px;
+    min-height:100px;
+    margin:10px 0 30px 0;
+    padding:10px;
+    border:1px solid #aaaaaa;
+}
+.footer{
+    overflow: hidden;
+}
+
+.footer button{
+    float: left;
+    margin-right: 100px;
+}

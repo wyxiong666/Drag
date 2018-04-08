@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>邃密通联·王亚雄</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div class="box">
+    <p>输入文字测试区域：</p>
+    <input id="input" type="text" name="" value="见贤。思齐？焉；见不贤！而内自省也。" />
+    <div class="wrap">
+        <div id="drag_div"></div>
+        <div class="drop_div">
+            <p>拖拽存放区域：</p>
+            <div id="div1" ondrop="drop(event,this)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event, this)"></div>
+
+            <div id="div2" ondrop="drop(event,this)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event, this)"></div>
+            <div id="div3" ondrop="drop(event,this)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event, this)"></div>
+        </div>
+    </div>
+    <div class="footer">
+        <button onclick="edit()" style="background: aquamarine;">按钮</button>
+        <button onclick="createJson()" style="background: yellowgreen;">导出按钮</button>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    function allowDrop(ev)
+    {
+        ev.preventDefault();
+    }
+
+    var srcdiv = null;
+    function drag(ev,divdom)
+    {  srcdiv=divdom;
+        ev.dataTransfer.setData("text/html",divdom.innerHTML);
+    }
+    function drop(ev,divdom)
+    {
+        ev.preventDefault();
+        if(srcdiv != divdom){
+            srcdiv.innerHTML = '';
+            var p = document.createElement('p');
+            p.innerHTML=ev.dataTransfer.getData("text/html");
+            divdom.appendChild(p);
+        }
+    }
+    function edit(){
+        const input = document.getElementById('input');
+        const drag_div = document.getElementById('drag_div');
+        if(input.value != '' || input.value != null){
+            var myarray = input.value.split(/[，；。！？：]/);
+
+            if(myarray[myarray.length-1] == ""){
+                myarray.length = myarray.length - 1;
+            }
+
+            for (var i = 0; i < myarray.length; i++) {
+                var p = document.createElement('p');
+                p.setAttribute('ondrop','drop(event,this)');
+                p.setAttribute('ondragover','allowDrop(event)');
+                p.setAttribute('draggable','true');
+                p.setAttribute('ondragstart','drag(event, this)');
+                p.innerHTML = myarray[i];
+                drag_div.appendChild(p);
+            }
+
+
+        }
+    }
+    function createJson(){
+        const p1 = document.getElementById('div1').getElementsByTagName('p');
+        const p2 = document.getElementById('div2').getElementsByTagName('p');
+        const p3 = document.getElementById('div3').getElementsByTagName('p');
+
+        let arr1 = [];
+        let arr2 = [];
+        let arr3 = [];
+        let sp1 = '';
+        let sp2 = '';
+        let sp3 = '';
+        for (let i = 0; i < p1.length; i++) {
+            arr1[i] = p1[i].innerHTML;
+            sp1 += arr1[i] + ',';
+        }
+        for (let i = 0; i < p2.length; i++) {
+            arr2[i] = p2[i].innerHTML;
+            sp2 += arr2[i] + ',';
+        }
+        for (let i = 0; i < p3.length; i++) {
+            arr3[i] = p3[i].innerHTML;
+            sp3 += arr3[i] + ',';
+        }
+        var jsons = {
+            'p1': sp1,
+            'p2': sp2,
+            'p3': sp3
+        }
+        alert(JSON.stringify(jsons));
+    }
+</script>
